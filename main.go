@@ -28,7 +28,7 @@ func main() {
 		"user=%s password=%s host=%s dbname=%s sslmode=disable port=%s",
 		"postgres",
 		"LarsNor2304_",
-		"10.12.176.3",
+		"34.88.169.173",
 		"postgres",
 		"5432",
 	)
