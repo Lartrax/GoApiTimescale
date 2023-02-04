@@ -6,7 +6,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
+	"os"
 
 	"github.com/go-chi/chi"
 	"github.com/google/uuid"
@@ -24,11 +26,11 @@ func enableCors(w *http.ResponseWriter) {
 func main() {
 	dbSource := fmt.Sprintf(
 		"user=%s password=%s host=%s dbname=%s sslmode=disable port=%s",
-		"dev",
-		"dev",
-		"localhost",
-		"dev",
-		"15432",
+		"postgres",
+		"LarsNor2304_",
+		"34.88.169.173",
+		"postgres",
+		"5432",
 	)
 	db = sqlx.MustOpen("postgres", dbSource)
 	defer db.Close()
@@ -49,12 +51,12 @@ func main() {
 		})
 	})
 
-	fmt.Println("Listening on port 1234")
-
-	err := http.ListenAndServe(":1234", r)
-	if err != nil {
-		panic(err)
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
 	}
+	log.Println("Serving http://localhost:" + port)
+	log.Fatal(http.ListenAndServe(":"+port, r))
 }
 
 //http://localhost:1234/v1/add/employees
